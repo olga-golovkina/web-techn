@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="css/style_content.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <div class="top-nav">
+    <a href="#">▲</a>
+  </div>
+
+  <div id="content">
+    <h1>Средства защиты информации от несанкционированного доступа</h1>
+    <h2>Содержание</h2>
+    <p><a href="#begin">Введение</a></p>
+    <p><a href="#users">1 Пользователи и права доступа</a></p>
+    <p><a href="#snort">2 Snort</a></p>
+    <p><a href="#gpg">3 GnuPg</a></p>
+    <p><a href="#conclusion">Заключение</a></p>
+
+    <h2 id="begin">Введение</h2>
+    <p>Средства защиты информации от несанкционированного доступа является одним из самых значимых, т.к. на данный момент информация играет важную роль в мире. И всякую информацию стоит защищать, потому что её утечка чревата последствиями.</p>
+    <p>Что, собственно, означают понятия несанкционированный доступ и защита информации?</p>
+    <img id="leftimg" src="img/вор.png"><p><b>Несанкионированный доступ</b> — это преднамеренный или случайный доступ к информации, не разрешенный в установленном порядке.</p>
+    <p><b>Защита информации</b> — это действия по предотвращению утечки, хищения, утраты, модификации, несанкционированных и непреднамеренных воздействий на защищаемую информацию.</p>
+    <p>Защита информации может проводиться с помощью аппаратного и программного обеспечений. Но в рамках Курсовой работы здесь будут рассматриваться программные средства защиты информации.</p>
+    <p><ul>
+      В целях демонстрации ЗИ были выбраны 3 программных средства:
+      <li>Пользователи и права доступа (стандартное средство ОС)</li>
+      <li>Snort</li>
+      <li>GnuPg</li>
+    </ul>
+    <div id="prog">
+      <img src="img/п1.1.png">
+      <img src="img/п1.2.png">
+      <img src="img/п1.3.png">
+    </div>
+    </p>
+
+    <h2 id="users">1 Пользователи и права доступа</h2>
+    <img id="rightimg"src="img/п1.1.png">
+    <p>Данное программное средство является стандартным средством любой многопользовательской операционной системы и является одной из самых примитивных средств защиты информации.</p>    <p>Её работа завязана на 3 этапах: Аутентификация, Авторизация, Аудит.</p>
+    <p><b>Что означают эти этапы?</b></p>
+    <p><b>Аутентификация</b> — это процедура доказательства пользователем того, что он есть тот, за кого себя выдает, в частности, доказательство того, что именно ему принадлежит введенный им идентификатор.</p>
+    <p><b>Авторизация</b> — это процесс подтверждения прав на совершение определенных действий в ОС.</p>
+    <p><b>Аудит</b> — это фиксация в системном журнале событий, связанных с доступом к защищаемым системным ресурсам. Аудит используется для того, чтобы засекать даже неудачные попытки «взлома» системы.</p>
+    <p>В любой многопользовательской ОС пользователь <b>"Администратор"</b>. В Linux его называют как <b>супер-пользователь</b> или <b>root.</b> Он имеет полный доступ к ОС и является самым главным в ней пользователем.</p>
+    <p>Далее будут продемонстрированы процессы этих этапов в рамках ОС Linux Ubuntu.</p>
+    <p><b>Аутентифакция</b></p>
+
+    <figure class="img-left">
+      <img class="my-img" src="img/аутентиф.png"/>
+      <figcaption>Форма Аутентификации в Linux Ubuntu</figcaption>
+    </figure>
+    <div id="myModal" class="modal">
+      <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+      <img class="modal-content" id="img01">
+      <div id="caption"></div>
+    </div>
+
+      <br>
+      <p>При запуске или блокировки ОС для входа в систему просят ввести имя и пароль доступа. В случае неправильного ввода данных, авторизация не будет происходить.</p>
+      <p>И, соответственно, если данные написаны коррекино, то будет происходить авторизация.</p>
+      <br>
+      <br>
+      <p><b>Авторизация</b></p>
+      <p>Сразу не понять, какие права даны пользователю. В Linux можно это посмотреть в командной строке с помощью команды:</p>
+      <div id="code">
+        ls -l
+      </div>
+
+      <figure class="img-right">
+        <img class="my-img" src="img/права.png">
+        <figcaption>Отображение списка прав доступа к папке</figcaption>
+      </figure>
+      <div id="myModal" class="modal">
+        <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+      </div>
+
+      <br>
+      <br>
+      <p>Эта команда действует в пределах каталога. В данном случае, как на изображении, была Домашняя папка ОС. Т.к. проверка была проведена для root пользователя, то у него есть право на полный доступ.</p>
+        <br>
+        <br>
+        <p>Создавать правила для папки или каталога можно с помощью окна свойств каталога/папки, либо с помощью команды:</p>
+
+        <div id="code">
+          chmod <права_доступа> <имя_файла|имя_папки>
+        </div>
+
+        <p><b>Параметры прав доступа</b></p>
+        <table border="1px" width="100%">
+           <tr>
+            <th>Значение</th>
+            <th>Цифровое значение</th>
+            <th>Комментарии</th>
+           </tr>
+           <tr>
+            <td>-rw——-</td>
+            <td>600</td>
+            <td>Владелец может читать и записывать файл.</td>
+          </tr>
+          <tr>
+            <td>-rw-r–r–</td>
+            <td>644</td>
+            <td>Владелец может читать и записывать файл, группа и другие могут только читать.</td>
+          </tr>
+          <tr>
+            <td>-rw-rw-rw-</td>
+            <td>666</td>
+            <td>Владелец, группа и другие могут читать и записывать.</td>
+          </tr>
+          <tr>
+            <td>-rwx——</td>
+            <td>700</td>
+            <td>Владелец может читать, записывать и выполнять, группа и другие не имеют никаких прав доступа.</td>
+          </tr>
+          <tr>
+            <td>-rwx–x–x</td>
+            <td>711</td>
+            <td>Владелец может читать, записывать и выполнять, группа и другие могут только выполнять.</td>
+          </tr>
+          <tr>
+            <td>-rwxr-xr-x</td>
+            <td>755</td>
+            <td>Владелец может читать, записывать и выполнять, группа и другие могут читать и выполнять.</td>
+          </tr>
+
+          <tr>
+            <td>-rwxrwxrwx</td>
+            <td>777</td>
+            <td>Все типы пользователей могут читать, записывать и выполнять.</td>
+          </tr>
+
+         </table>
+
+        <figure class="img-center">
+             <img class="my-img" src="img/права_граф.png">
+             <figcaption>Изменение прав доступа для папки через "Свойства"</figcaption>
+        </figure>
+
+        <div id="myModal" class="modal">
+          <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+          <img class="modal-content" id="img01">
+          <div id="caption"></div>
+        </div>
+
+        <figure class="img-center">
+              <img class="my-img" src="img/chmod.png">
+             <figcaption>Изменение прав доступа для файла с помощью chmod</figcaption>
+        </figure>
+
+        <div id="myModal" class="modal">
+          <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+          <img class="modal-content" id="img01">
+          <div id="caption"></div>
+        </div>
+
+
+    <p>
+      <b>Аудит</b>
+    </p>
+    <p>
+      В Linux работа с аудитом происходит в программе Linux Audit Daemon.
+    </p>
+    <ul><p><b>Linux Audit Daemon</b> — это среда, позволяющая проводить аудит событий в системе Linux. Используя мощную систему аудита возможно отслеживать многие типы событий для мониторинга и проверки системы, например:</p>
+      <li>доступ к файлам;</li>
+      <li>изменение прав на файлы;</li>
+      <li>просмотр пользователей, изменивших конкретный файл;</li>
+      <li>обнаружение несанкционированных изменений;</li>
+      <li>мониторинг системных вызовов и функций;</li>
+      <li>обнаружение аномалий, таких как сбои;</li>
+      <li>мониторинг набора команд.</li>
+    </ul>
+
+    <p>По умолчанию эта утилита уже встроенна в ОС. У неё нет графического интерфейса. Отсюда следует, что с ней надо работать через командную строку.</p>
+    <p>Чтобы выполнить мониторинг файла, необходимо определить его полное имя и разрешения для поиска:</p>
+    <div id="code">
+      auditctl -a exit,always -F path=<имя_файла> -F perm=<разрешения>
+    </div>
+    <p>Поиск связанного события или доступ к файлу можно быстро отслеживать с помощью инструмента ausearch:</p>
+    <div id="code">
+    ausearch -f <имя_файла>
+    </div>
+    <p>Его результат будет таким:</p>
+    <figure class="img-center">
+         <img class="my-img" src="img/аудит.png">
+         <figcaption>Использование инструмента ausearch</figcaption>
+    </figure>
+    <div id="myModal" class="modal">
+      <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+      <img class="modal-content" id="img01">
+      <div id="caption"></div>
+    </div>
+
+
+    <p>Более подробную информацию про эту утилиту можно найти <a href="https://1cloud.ru/help/security/audit-linux-c-pomoshju-auditd" target="_blank"><b>тут</b></a>.</p>
+
+
+    <h2 id="snort">2 Snort</h2>
+    <img id="leftimg" src="img/п1.2.png" alt="">
+<p><b>Snort</b> — свободная сетевая система предотвращения вторжений (IPS) и обнаружения вторжений (IDS) с открытым исходным кодом, способная выполнять регистрацию пакетов и в реальном времени осуществлять анализ трафика в IP-сетях.</p>
+<p>Создана Мартином Рёшем (англ. Martin Roesch), в дальнейшем развивалась и поддерживалась основанной им компанией Sourcefire (поглощена Cisco в 2013 году).</p>
+<p>Выполняет протоколирование, анализ, поиск по содержимому, а также широко используется для активного блокирования или пассивного обнаружения целого ряда нападений и зондирований, таких как попытки атак на переполнение буфера, скрытое сканирование портов, атаки на веб-приложения, SMB-зондирование и попытки определения операционной системы. Программное обеспечение в основном используется для предотвращения проникновения, блокирования атак, если они имеют место.</p>
+
+<figure class="img-right">
+     <img class="my-img" src="img/snort.png">
+     <figcaption>Запуск программы</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<br>
+<p>Программа не имеет графического интерфейса, поэтому работа с ним идет в командной строке. Однако есть веб-интерфейсы но они несут информативную часть, нежели функциональную.</p>
+<br>
+<br>
+<br>
+<p>Функциональная часть программы идет за счет файла конфигурации и файла правил фильтрации и блокировки:</p>
+<figure class="img-left">
+    <img id="duo-img" class="my-img" src="img/conf.png">
+    <figcaption>Файл с конфигурацией</figcaption>
+ </figure>
+ <div id="myModal" class="modal">
+   <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+   <img class="modal-content" id="img01">
+   <div id="caption"></div>
+ </div>
+
+ <figure class="img-right">
+    <img id="duo-img" class="my-img" src="img/rules.png">
+ <figcaption>Файл с правилами</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<br>
+<p>Конструкция записи правила:</p>
+<div id="code">
+  <Действие> <Протокол> <IP-адреса отправителей> <Порты отправителей> <Оператор направления> <IP-адреса получателей> <Порты получателей> (ключ_1 : значение_1; ключ_2 : значение_2; ... ключ_N : значение_N;)
+</div>
+
+<p style="text-align:center;"><b>Действия для IPS</b></p>
+<table border="1px" width="100%">
+   <tr>
+    <th>Действие</th>
+    <th>Комментарии</th>
+   </tr>
+   <tr>
+     <td>drop</td>
+     <td>блокирует (отбрасывает) пакет и передаёт информацию системе журналирования</td>
+   </tr>
+   <tr>
+     <td>sdrop</td>
+     <td>блокирует (отбрасывает) пакет и не использует систему журналирования</td>
+   </tr>
+   <tr>
+     <td>reject</td>
+     <td>блокирует (отбрасывает) пакет, передаёт информацию системе журналирования, а затем посылает сегмент сброса TCP (TCP RST), если протокол TCP, или сообщение ICMP-порт недоступен, если протокол UDP</td>
+   </tr>
+ </table>
+
+<p style="text-align:center;"><b>Действия для IDS</b></p>
+<table border="1px" width="100%">
+   <tr>
+    <th>Действие</th>
+    <th>Комментарии</th>
+   </tr>
+   <tr>
+     <td>alert</td>
+     <td>генерирует предупреждение, используя указанное предупреждение, и передаёт информацию системе журналирования</td>
+   </tr>
+   <tr>
+     <td>log</td>
+     <td>просто протоколирует пакеты без предупреждений</td>
+   </tr>
+   <tr>
+     <td>pass</td>
+     <td>игнорирует пакеты</td>
+   </tr>
+   <tr>
+     <td>activate</td>
+     <td>генерирует предупреждение, затем включает указанное динамическое правило</td>
+   </tr>
+   <tr>
+     <td>dynamic</td>
+     <td>остаётся пассивным, пока не активируется динамическим правилом, затем действует как log</td>
+   </tr>
+ </table>
+<p>Пример работы программы:</p>
+ <figure class="img-left">
+     <img id="duo-img" class="my-img" src="img/ping.png">
+     <figcaption>Процесс передачи пакетов для теста</figcaption>
+  </figure>
+  <div id="myModal" class="modal">
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+  </div>
+
+  <figure class="img-right">
+      <img id="duo-img" class="my-img" src="img/snort_w.png">
+  <figcaption>Работа snort</figcaption>
+ </figure>
+ <div id="myModal" class="modal">
+   <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+   <img class="modal-content" id="img01">
+   <div id="caption"></div>
+ </div>
+
+  <p>Более подробную информацию о работе с программой можно найти <a href="http://www.thg.ru/network/20051020/index.html" target="_blank"><b>тут</b></a>.</p>
+    <h2 id="gpg">3 GnuPg</h2>
+    <img id="rightimg" src="img/п1.3.png" alt="">
+
+    <p><b>Шифрование</b> — обратимое преобразование информации в целях сокрытия от неавторизованных лиц, с предоставлением, в это же время, авторизованным пользователям доступа к ней. В данном случае с использованием ключей.</p>
+    <p><b>GNU Privacy Guard (GnuPG, GPG)</b> — свободная программа для шифрования информации и создания электронных цифровых подписей. Разработана как альтернатива PGP и выпущена под свободной лицензией GNU General Public License. GnuPG полностью совместима со стандартом IETF OpenPGP. Текущие версии GnuPG могут взаимодействовать с PGP и другими OpenPGP-совместимыми системами.</p>
+    <p>Программа проводит 2 типа шифрования: симметричное и ассиметричное.</p>
+    <p><b>Симметричное шифрование</b> использует один и тот же ключ и для зашифровывания, и для расшифровывания.</p>
+    <p><b>Асимметричное шифрование</b> использует два разных ключа: один для зашифровывания (который также называется открытым), другой для расшифровывания (называется закрытым).</p>
+  <p>Пример работы программы с использованием симметричного шифрования:</p>
+  <div id="code">
+    gpg –c <имя_файла>
+  </div>
+  <figure class="img-center">
+       <img class="my-img" src="img/crypto1.png">
+       <figcaption>Шифрование текстового файла и его результат</figcaption>
+  </figure>
+  <div id="myModal" class="modal">
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+  </div>
+
+  <figure class="img-center">
+       <img class="my-img" src="img/uncrypto1.png">
+       <figcaption>Расшифровка текстового файла и его результат</figcaption>
+  </figure>
+  <div id="myModal" class="modal">
+    <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+  </div>
+
+<p>Пример работы программы с использованием асимметричного шифрования:</p>
+<div id="code">
+  gpg --full-generate-key
+</div>
+<figure class="img-center">
+    <img class="my-img" src="img/c_key1.png">
+     <figcaption>Создание ключа</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<figure class="img-center">
+      <img class="my-img" src="img/c_key2.png">
+     <figcaption>Создание ключа (продолжение #1)</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<figure class="img-center">
+      <img class="my-img" src="img/c_key3.png">
+     <figcaption>Создание ключа (завершение)</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<figure class="img-center">
+      <img class="my-img" src="img/c_key4.png">
+     <figcaption>Ключи в зашифрованном виде</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<p>Команда шифрования закрытым ключом:</p>
+<div id="code">
+  gpg --recipient <имя_пользователя_из_бд_gpg> --encrypt <имя_файла>
+</div>
+<figure class="img-center">
+      <img class="my-img" src="img/crypto2.png">
+     <figcaption>Один из типов шифрования файла ассиметричным способом</figcaption>
+</figure>
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+
+<p>Более подробную информацию о программе можно найти <a href="https://habr.com/ru/post/358182/"><b>тут</b></a>.</p>
+
+    <h2 id="conclusion">Заключение</h2>
+    <p>В этом разделе было разобрано несколько способов защиты информации: управление правами доступа и аудит, мониторинг и защита от вторжений из сети интернет и шифрование данных. Если эти средства объединить + использовать защиту на аппаратном уровне, то получится довольно таки неплохая защита данных.</p>
+    <p>Однако же особо искушенные злоумышленники смогут найти лазейку рано или поздно.</p>
+    <div id="logo">
+      <img src="img/вор2.png">
+    </div>
+
+  </div>
+  <script src="js/scripts.js"></script>
+
+</body>
+</html>
